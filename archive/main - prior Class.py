@@ -1,32 +1,11 @@
 
-# Packages
+# # # # Packages # # # #
 import requests
-import json
 import os
-import time
+from time import sleep
 from datetime import date
-import sys
-import pypyodbc  # Logging
-import pyodbc  # Looping
-import pandas as pd
 from bs4 import BeautifulSoup
 
-# Sql Server
-connLoop = pyodbc.connect("DRIVER={ODBC Driver 17 for SQL Server};"
-                          "SERVER=DESKTOP-FK7HVAL\PRACTICEDB;"
-                          "DATABASE=Messy;"
-                          "Trusted_Connection=yes;")
-connLog = pypyodbc.connect("DRIVER={ODBC Driver 17 for SQL Server};"
-                           "SERVER=DESKTOP-FK7HVAL\PRACTICEDB;"
-                           "DATABASE=Messy;"
-                           "Trusted_Connection=yes;")
-cursor = connLog.cursor()
-
-# Sql Code to Insert Later
-sql = """
-INSERT INTO Messy.dbo.JsonStorage (JasonType, Jason)
-VALUES (?, ?)
-"""
 
 # Where txt Files Saved
 os.getcwd()
@@ -63,7 +42,9 @@ def write_drive(urltext, make, model, year, Loop):
 
 def get_data(urlused, make, model, year, Loop):
     # Request Website
-    r = requests.get(urlused)
+    header = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4040.128"}
+    r = requests.get(urlused, headers=header, timeout=5)
     # Cook The Soup
     soup = BeautifulSoup(r.text, 'html.parser')
     # Pull Script Portion (Car Data)
@@ -121,7 +102,7 @@ def get_allpages(make, model, year):
     while NoData == 0:
         #############################################
         # Don't Bombard Them Yo
-        time.sleep(2)
+        sleep(2)
         #############################################
         # Call URL, Clean Data, Log Data
         NoData = get_onepage(make, model, year, Loop)
@@ -134,24 +115,13 @@ def get_allpages(make, model, year):
 #####################################################################
 #####################################################################
 #####################################################################
-SQL_Query = pd.read_sql_query(
-    '''
-    SELECT A.Make, A.Model, A.Year
-    FROM Messy.Cars.MakeModel A with (NOLOCK)
-    WHERE A.Make <> 'chevrolet'
-    ''', connLoop)
-
-MakeModelYear = pd.DataFrame(SQL_Query, columns=['Make', 'Model', 'Year'])
-# print(MakeModelYear)
 
 
 # # Website Values
 # make = "toyota"
 # model = "camry"
 # year = "2018"
-
 #####################################################################
-
 for index, row in MakeModelYear.iterrows():
     make = str(row['Make'])
     model = str(row['Model'])
