@@ -7,7 +7,7 @@
 	IF OBJECT_ID('[Messy].[Cars].[MakeModel]') IS NOT NULL DROP TABLE [Messy].[Cars].[MakeModel] 
 -- */
 
-IF OBJECT_ID('[Messy].[Cars].[MakeModel]') IS NOT NULL DROP TABLE [Messy].[Cars].[MakeModel] 
+--IF OBJECT_ID('[Messy].[Cars].[MakeModel]') IS NOT NULL DROP TABLE [Messy].[Cars].[MakeModel] 
 CREATE TABLE [Messy].[Cars].[MakeModel](
 	[MMID]			[bigint] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[InsertDate]	[datetime] NOT NULL DEFAULT (getdate()),
@@ -21,7 +21,7 @@ SELECT *
 FROM Messy.Cars.MakeModel A with (NOLOCK)
 
 
-IF OBJECT_ID('[Messy].[Cars].[TrimEngine]') IS NOT NULL DROP TABLE [Messy].[Cars].[TrimEngine] 
+--IF OBJECT_ID('[Messy].[Cars].[TrimEngine]') IS NOT NULL DROP TABLE [Messy].[Cars].[TrimEngine] 
 CREATE TABLE [Messy].[Cars].[TrimEngine](
 	[TEID]		[bigint] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[InsertDate]	[datetime] NOT NULL DEFAULT (getdate()),
@@ -37,7 +37,7 @@ FROM Messy.Cars.TrimEngine A with (NOLOCK)
 
 
 
-IF OBJECT_ID('[Messy].[Cars].[VIN]') IS NOT NULL DROP TABLE [Messy].[Cars].[VIN] 
+--IF OBJECT_ID('[Messy].[Cars].[VIN]') IS NOT NULL DROP TABLE [Messy].[Cars].[VIN] 
 CREATE TABLE [Messy].[Cars].[VIN](
 	[VinID]			[bigint] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[InsertDate]	[datetime] NOT NULL DEFAULT (getdate()),

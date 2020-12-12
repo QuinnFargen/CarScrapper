@@ -18,18 +18,48 @@ SELECT TOP 500 * FROM Messy..JsonProcess A with (NOLOCK)
 
 SELECT * FROM Messy..JsonType A with (NOLOCK)
 
+SELECT *
+FROM Messy.Cars.vwJsonMultiCarInfo A with (NOLOCK)
+WHERE a.JasonID = 1
 
 
 ---------------------------------------------------------
 -- Starting a New Json Process
-	DECLARE @JsonTypeID int = 1	-- Ed_MultiPageIndCar
+	DECLARE @JsonTypeID int = 1			-- Ed_MultiPageIndCar
+	DECLARE @JProcID_Done bigint = NULL	-- Nothing to Update
 	DECLARE @JProcID bigint
-	SELECT @JProcID = Messy.[Cars].[LogJsonProcess] @JsonTypeID
+	EXEC Messy.[Cars].[LogJsonProcess] @JsonTypeID, @JProcID_Done
+										, @JProcID OUTPUT
+	
+	--SELECT @JProcID
 
 	
 ---------------------------------------------------------
 -- Check & Log VinID / Trim Engine
 
+	/*-- Testing:
+		DECLARE @JsonTypeID int = 1	
+		DECLARE @JProcID	bigint = 1
+	-- */
+
+	DECLARE @MMID bigint
+	DECLARE @TEID bigint
+	
+	EXEC Messy.Cars.[Log_MMandTE] @JsonTypeID, @JProcID
+								, @MMID OUTPUT, @TEID OUTPUT
+
+
+	/*-- Testing:
+		DECLARE @JsonTypeID int = 1	
+		DECLARE @JProcID	bigint = 1
+		DECLARE @MMID		bigint = 1
+		DECLARE @TEID		bigint = 1
+	-- */
+	
+	DECLARE @VinID bigint
+
+	EXEC Messy.Cars.[LogVIN] @JsonTypeID, @JProcID, @MMID, @TEID
+							, @VinID OUTPUT
 
 
 ---------------------------------------------------------

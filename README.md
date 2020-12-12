@@ -4,7 +4,7 @@ TLDR: Car Data Scrapping
 
 Current Status:
 
-1. Python process is built to scrap through like of MakeModelYear of cars.
+1. Python process is built to scrap through a list of Make/Model/Year of cars.
 2. Sql Server is set up to hold data inserted from python process.
    a. Working on getting the duplicate / update on VINs finalized.
 
